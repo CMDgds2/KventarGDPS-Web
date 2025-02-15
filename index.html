@@ -3,23 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KventarGDPS Сайт</title>
-    <meta http-equiv="refresh" content="2; url=index.php">
+    <title>KventarGDPS - Главная</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 0;
             text-align: center;
-            margin-top: 50px;
-            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
-        .message {
-            font-size: 20px;
-            color: #007BFF;
+
+        header {
+            background-color: #1f1f1f;
+            color: #f0f0f0;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #1f1f1f;
+            color: #f0f0f0;
+            padding: 15px;
+            margin-top: auto;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-button {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #28a745, #00b33c);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: background 0.6s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-button:hover {
+            background: linear-gradient(45deg, #00b33c, #28a745);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .download-button:focus {
+            outline: none;
+        }
+
+        .social-links a {
+            margin: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+        }
+
+        .social-links a:hover {
+            color: #00b33c;
         }
     </style>
 </head>
 <body>
-    <h1>Добро пожаловать на сайт KventarGDPS</h1>
-    <p class="message">Через 2 секунды мы перенаправим вас на страницу...</p>
+
+    <header>
+        <h1>KventarGDPS</h1>
+        <p>Добро пожаловать на наш сайт! Выберите платформу для скачивания или перейдите на страницу скачивания.</p>
+    </header>
+
+    <div class="content">
+        <a href="download.html" class="download-button">Перейти к скачиванию</a>
+        <div class="social-links">
+            <?php
+            // Настройки подключения к базе данных
+            $servername = "localhost";
+            $username = "gdps_kventargdps";
+            $password = "gkuj611nq5fuv85n80kqoq";
+            $dbname = "your_database_name"; // замените на название вашей базы данных
+
+            // Создание подключения
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // Проверка подключения
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Получаем социальные ссылки из базы данных
+            $sql = "SELECT * FROM social_links";
+            $result = $conn->query($sql);
+
+            // Создаем массив для ссылок
+            $socialLinks = [];
+
+            if ($result->num_rows > 0) {
+                // Добавляем все данные в массив
+                while($row = $result->fetch_assoc()) {
+                    $socialLinks[$row["type"]] = $row["link"];
+                }
+            }
+
+            // Закрываем подключение
+            $conn->close();
+            ?>
+
+            <?php if (isset($socialLinks['discord'])): ?>
+                <a href="<?= $socialLinks['discord'] ?>" target="_blank">Discord</a>
+            <?php endif; ?>
+            <?php if (isset($socialLinks['youtube'])): ?>
+                <a href="<?= $socialLinks['youtube'] ?>" target="_blank">YouTube</a>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 KventarGDPS</p>
+    </footer>
+
 </body>
 </html>

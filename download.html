@@ -1,0 +1,276 @@
+<!DOCTYPE html> 
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KventarGDPS - Скачивание</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        header {
+            background-color: #1f1f1f;
+            color: #f0f0f0;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        footer {
+            background-color: #1f1f1f;
+            color: #f0f0f0;
+            padding: 15px;
+            margin-top: auto;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-button {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #28a745, #00b33c);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.6s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: buttonFadeIn 1s ease forwards;
+        }
+
+        .download-button:hover {
+            background: linear-gradient(45deg, #00b33c, #28a745);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .download-button:focus {
+            outline: none;
+        }
+
+        .platform-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .back-button {
+            padding: 12px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            animation: buttonFadeIn 1.5s ease forwards;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button:focus {
+            outline: none;
+        }
+
+        .download-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #1f1f1f;
+            padding: 15px;
+            width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            display: none;
+            opacity: 0;
+            animation: popupFadeIn 0.5s ease forwards;
+        }
+
+        .popup-header {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .popup-content {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .popup-button {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #28a745, #00b33c);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background 0.6s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-button:hover {
+            background: linear-gradient(45deg, #00b33c, #28a745);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 1.5em;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: red;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes buttonFadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popupFadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>KventarGDPS - Скачивание</h1>
+        <p>Выберите вашу платформу для скачивания:</p>
+    </header>
+
+    <div class="content">
+        <a href="assets/apps/windows/KventarGDPS-1.0.0-windows.zip" class="download-button">
+            <img src="assets/sprites/windows.png" alt="Windows Icon" class="platform-icon">
+            Скачать для Windows
+        </a>
+        <a href="assets/apps/android/KventarGDPS-1.0.0-android.apk" class="download-button">
+            <img src="assets/sprites/android.png" alt="Android Icon" class="platform-icon">
+            Скачать для Android
+        </a>
+        <a href="index.html" class="back-button">
+            Вернуться на главную
+        </a>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 KventarGDPS</p>
+    </footer>
+
+    <div id="download-popup" class="download-popup">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <div class="popup-header">Скачайте версию для вашей платформы</div>
+        <div id="popup-content" class="popup-content"></div>
+        <a id="download-link" class="popup-button" href="#" target="_blank">Скачать</a>
+    </div>
+
+    <script>
+        const downloadPopup = document.getElementById('download-popup');
+        const popupContent = document.getElementById('popup-content');
+        const downloadLink = document.getElementById('download-link');
+
+        const userAgent = navigator.userAgent.toLowerCase();
+
+        function showPopup(message, downloadUrl, iconUrl) {
+            popupContent.innerHTML = message;
+            downloadLink.href = downloadUrl;
+            const icon = `<img src="${iconUrl}" alt="Icon" class="platform-icon">`;
+            popupContent.innerHTML = icon + popupContent.innerHTML;
+            downloadPopup.style.display = 'block';
+            setTimeout(() => {
+                downloadPopup.style.opacity = '1';
+            }, 100);
+        }
+
+        function closePopup() {
+            downloadPopup.style.display = 'none';
+        }
+
+        if (userAgent.indexOf("windows") !== -1) {
+            showPopup(
+                "Вы используете Windows. Скачайте версию для Windows:",
+                "assets/apps/windows/KventarGDPS-1.0.0-windows.zip",
+                "assets/sprites/windows.png"
+            );
+        } else if (userAgent.indexOf("android") !== -1) {
+            showPopup(
+                "Вы используете Android. Скачайте версию для Android:",
+                "assets/apps/android/KventarGDPS-1.0.0-android.apk",
+                "assets/sprites/android.png"
+            );
+        } else if (userAgent.indexOf("mac") !== -1) {
+            showPopup(
+                "Вы используете MacOS. На MacOS у нас технические проблемы. Вы можете попробовать скачать для Windows или Android.",
+                "https://www.winehq.org",
+                "assets/sprites/wine.png"
+            );
+        } else if (userAgent.indexOf("linux") !== -1) {
+            showPopup(
+                "Вы используете Linux. Для запуска на Linux скачайте Wine или аналоги:",
+                "https://www.winehq.org",
+                "assets/sprites/wine.png"
+            );
+        } else if (userAgent.indexOf("iphone") !== -1 || userAgent.indexOf("ipod") !== -1 || userAgent.indexOf("ipad") !== -1) {
+            showPopup(
+                "Ваша система определена как iOS. Версия для iOS будет доступна позже. Пока вы можете скачать для Windows или Android или использовать эмуляторы для запуска.",
+                "#",
+                "assets/sprites/ios.png"
+            );
+        } else {
+            showPopup(
+                "Неизвестная система. Вы можете скачать версию для Windows или Android.",
+                "assets/apps/windows/KventarGDPS-1.0.0-windows.zip",
+                "assets/sprites/windows.png"
+            );
+        }
+    </script>
+</body>
+</html>
